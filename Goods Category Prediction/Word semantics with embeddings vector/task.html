@@ -1,0 +1,72 @@
+<div class="step-text">
+<p></p><h5 id="description">Description</h5><p>Congratulations on completing the preprocessing step! Now it's time to prepare the data for the machine learning model. In this stage, you will transform the product descriptions into machine-readable format. You'll use Word2Vec, a popular technique for generating word embeddings, to make this transformation. These word embeddings capture the contextual meanings of words, allowing you to represent product descriptions in a numerical format that machine learning models can understand.</p><pre><code class="language-python">def train_word2vec(train_data: pd.Series(list[str]), test_data: pd.Series(list[str])) -&gt; \
+        (KeyedVectors, pd.DataFrame, pd.DataFrame):
+
+    # Instantiate the Word2Vec with the parameters
+    w2v_model = Word2Vec(min_count=5, window=5, sg=0, vector_size=300, sample=6e-5, negative=20)
+
+    # Build the vocabulary of w2v_model with the train_data
+    ...
+
+    """Train the w2v_model with the train_data,
+    and the total_examples and epochs parameters.
+    Set the epochs parameter to 15
+    """
+    w2v_model.train(..., total_examples=..., epochs=...)
+
+    """Generate the train word embeddings vector and save as a DataFrame.
+    Find the mean of the embeddings for each word. For words not in the vocabulary
+    set the embeddings as a numpy array of zeros
+    """
+    train_df = pd.DataFrame([np.mean([w2v_model.wv[word] for word in tokens if word in w2v_model.wv]
+                                     or [np.zeros(300)], axis=0) for tokens in train_data])
+
+    """Generate the test word embeddings vector and save as a DataFrame.
+    Find the mean of the embeddings for each word. For words not in the vocabulary
+    set the embeddings as a numpy array of zeros
+    """
+    test_df = ...
+
+    return w2v_model, train_df, test_df</code></pre><p>After completing the tasks in the <code class="language-python">train_word2vec</code> function, include the <code class="language-python">main</code> function and run the program:</p><pre><code class="language-python">def main():
+
+    # Load the preprocessed_df.pkl file from the data directory
+    with open("../data/preprocessed_df.pkl", "rb") as f:
+        df = pickle.load(f)
+
+    # split the preproceesed data into train and test sets
+    train, test = train_test_split(df, test_size=.1, random_state=10, stratify=df.categories)
+
+    # Get the categories for the train and test sets
+    train_labels = train.categories
+    test_labels = test.categories
+
+    # Get the preprocessed tokens from the train and test sets
+    train_tokens = train.tokens
+    test_tokens = test.tokens
+
+    # Call the train_word2vec function
+    w2v_model, train_df, test_df = train_word2vec(train_tokens, test_tokens)
+
+    # Sort the vocabulary generated from the word2vec_model and print first 50 words
+    print(sorted(model.wv.key_to_index.keys())[:50])
+
+    # Save the following as pickle files in the data directory
+    with open('../data/w2v_model.pkl', 'wb') as f:
+        pickle.dump(w2v_model, f, pickle.HIGHEST_PROTOCOL)
+
+    with open('../data/train_df.pkl', 'wb') as f:
+        pickle.dump(train_df, f, pickle.HIGHEST_PROTOCOL)
+
+    with open('../data/test_df.pkl', 'wb') as f:
+        pickle.dump(test_df, f, pickle.HIGHEST_PROTOCOL)
+
+    with open('../data/train_labels.pkl', 'wb') as f:
+        pickle.dump(train_labels, f, pickle.HIGHEST_PROTOCOL)
+
+    with open('../data/test_labels.pkl', 'wb') as f:
+        pickle.dump(test_labels, f, pickle.HIGHEST_PROTOCOL)
+
+
+if __name__ == "__main__":
+    main()</code></pre><h5 id="objectives">Objectives</h5><p>To complete this stage:</p><ol><li><p>Finish the tasks in the <code class="language-python">train_word2vec</code> function</p></li><li><p>Run the main function to:</p><ul><li><p>Load <code class="language-python">preprocessed_df.pkl</code> from the <code class="language-python">data</code> directory</p></li><li><p>Split the data into train and test sets</p></li><li><p>Get the labels and preprocessed tokens for the train and test sets</p></li><li><p>Call the <code class="language-python">train_word2vec</code> function</p></li><li><p>Print a sorted list of the first 50 words in the word2vec vocabulary</p></li><li><p>Save pickle files to the data directory </p></li></ul></li></ol><div class="alert alert-primary"><p>Older versions of Python may cause compatibility issues. Please use Python 3.11.9 or higher as your interpreter.</p></div><div class="alert alert-warning"><p>Before pressing the <code class="language-python">Check</code> button, please run your solution</p></div><p></p><h5 id="examples">Examples</h5><p><strong>Example 1:</strong><em> an example of the program output</em></p><pre><code class="language-python">['aa', 'aaa', 'aab', 'aac', 'aaw', 'aax', 'ab', 'aba', 'abacus', 'abalone', 'abandon', 'abb', 'abbey', 'abbreviation', 'abc', 'abdomen', 'abdominal', 'abeb', 'ability', 'ablative', 'able', 'ably', 'abound', 'abraham', 'abrasion', 'abrasive', 'abroad', 'abruptly', 'abs', 'absence', 'absolute', 'absolutely', 'absorb', 'absorbable', 'absorbed', 'absorbency', 'absorbent', 'absorber', 'absorbs', 'absorption', 'abstract', 'abundance', 'abundant', 'abuse', 'ac', 'acacia', 'academic', 'academy', 'acai', 'acamps']    </code></pre>
+</div>

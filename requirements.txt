@@ -1,0 +1,7 @@
+numpy
+pandas
+nltk
+scikit-learn
+streamlit
+gensim
+https://github.com/hyperskill/hs-test-python/archive/release.tar.gz

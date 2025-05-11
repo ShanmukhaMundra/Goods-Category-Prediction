@@ -1,0 +1,121 @@
+<div class="step-text">
+<p></p><h5 id="description">Description</h5><p>Congratulations on reaching the final stage of the project journey! In this stage, you'll bring your hard work to fruition by showcasing the predictions made by your trained machine learning model. The model you've built is now capable of categorizing product descriptions accurately, helping both retailers and customers navigate the vast landscape of online marketplaces more effectively.</p><p>Your task is to create a user-friendly web application that allows users to input product descriptions and instantly receive predictions about which category those products belong to. This application will serve as a practical demonstration of the effectiveness of your solution. By visualizing the predictions, users will gain confidence in the accuracy and reliability of the model, enhancing their overall user experience.</p><p>You will receive text inputs of product descriptions from streamlit. You will need to preprocess the text in a similar way you did before training. You will therefore need the following functions:</p><pre><code class="language-python">def tokenize_text(text: str) -&gt; list[str]:
+
+    text = text.lower().strip()
+
+    # Tokenize with regexp token with the pattern [A-z]+
+    tokens = ...
+
+    # Remove stopwords
+    tokens = ...
+
+    return tokens
+
+
+def lemmatize_text(tokens: list[str]) -&gt; list[str]:
+
+    # Instantiate WordNetLemmatizer
+    lemmatizer = ...
+
+    # Lemmatize without POS tags for performance reasons
+    tokens = ...
+
+    return tokens  </code></pre><p>Next, you will need functions to load the pickle files you need and to make the product category predictions:</p><pre><code class="language-python">def load_models():
+    # Load w2v_model.pkl from the data directory
+    ...
+
+    # Load rf_model.pkl from the data directory
+    ...
+
+    # Load label_encoder.pkl from the data directory
+    ...
+
+    return w2v_model, rf_model, label_encoder
+
+
+def predict_top3_categories(text_input, w2v_model, rf_model, label_encoder):
+
+    # Tokenize and lemmatize text input
+    input_tokens = ...
+
+    # Get mean of the embeddings vector
+    input_embed = np.mean([w2v_model.wv[word] for word in input_tokens if word in w2v_model.wv]
+                          or [np.zeros(300)], axis=0)
+
+    # Convert embedding vectors to a DataFrame
+    input_df = ...
+
+    # Get the predicted probabilities of the rf_model with predict_proba
+    predicted_proba = ...
+
+    # Get the top3 categories from their probability values
+    top3_idx = np.argsort(predicted_proba, axis=1)[:, -3:]
+
+    # Get predicted value classes and flatten
+    top3_classes_encoded = rf_model.classes_[top3_idx]
+    top3_classes_encoded_flat = top3_classes_encoded.flatten()
+
+    # Perform inverse transformation to get the name of the classes and reshape
+    top3_classes = label_encoder.inverse_transform(top3_classes_encoded_flat)
+    top3_classes = top3_classes.reshape(top3_classes_encoded.shape)
+
+    return top3_classes, predicted_proba, top3_idx
+</code></pre><p>Include the <code class="language-python">main</code> function in your program:</p><pre><code class="language-python">def main():
+    st.title('Goods Category App')
+
+    text_input = st.text_area('Enter Goods Description', 'Type Here...')
+
+    button, space, clear = st.columns([1, 2, 1])
+
+    with button:
+        if st.button('Predict'):
+            w2v_model, rf_model, label_encoder = load_models()
+            top3_classes, predicted_proba, top3_idx = predict_top3_categories(text_input, w2v_model, rf_model,
+                                                                              label_encoder)
+
+            with space:
+                st.write("Top 3 Predicted Categories:")
+                for i, classes in enumerate(top3_classes):
+                    for category, prob in zip(classes[::-1], predicted_proba[i, top3_idx[i]][::-1]):
+                        st.write(f"{category} {prob * 100:.0f}")
+    with clear:
+        clear_button = st.button('Clear')
+
+        if clear_button:
+            st.empty()
+
+# Entry point
+if __name__ == "__main__":
+    main()</code></pre><p>Navigate to your <code class="language-python">task</code> directory (from the project root directory, <code class="language-python">Goods Category Prediction -&gt; task</code>) in the command line and run the program:</p><pre><code class="language-python">streamlit run goods.py</code></pre><p>A web app pops up in your default browser. With its simple interface, you can input product descriptions into a text area of the app and instantly receive predictions with just a click.</p><p>You can deploy your web application with Streamlit Cloud and GitHub. You will need a <a href="https://streamlit.io/cloud" rel="noopener noreferrer nofollow" target="_blank">Streamlit Cloud</a> and a <a href="https://github.com/" rel="noopener noreferrer nofollow" target="_blank">GitHub</a> account. The <a href="https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app" rel="noopener noreferrer nofollow" target="_blank">deploy your app</a> documentation shows how the deployment process works. That's not all. Now let's discuss the challenges you might likely encounter during deployment. The first challenge is storing large files in your GitHub repository. GitHub limits the size of files allowed in repositories to 50MB. You can overcome this challenge using the <a href="https://git-lfs.com/" rel="noopener noreferrer nofollow" target="_blank">Git Large File Storage</a>. The other challenge is the use of relative paths in your repository. You may need to change these to absolute paths in your repository. Finally, you will need the <code class="language-python">requirements.txt</code> file in the root of your repository and the necessary packages required to run the program must be listed in the <code class="language-python">requirements.txt</code> file.</p><div class="alert alert-warning"><p>You may comment out the entry point before clicking the <code class="language-python">Check</code> button.</p></div><h5 id="objectives">Objectives</h5><p>To complete this stage:</p><ol><li><p>Finish the tasks in the <code class="language-python">tokenize_text</code>, <code class="language-python">lemmatize_text</code>, <code class="language-python">load_models</code>, and <code class="language-python">predict_top3_categories</code> functions</p></li><li><p>Copy and paste the main function at the end of the program</p></li><li><p>Navigate to the <code class="language-python">task</code> directory in the command line and run: <code class="language-python">streamlit run goods.py</code></p></li><li><p>Interact with the web app that pops up in your default browser by supplying it with text input.</p></li></ol><h5 id="examples">Examples</h5><p><strong>Example 1:</strong><em> an example of the program output for the </em><a href="https://www.amazon.com/Beauty-Joseon-Dynasty-renewed-version/dp/B08WJQ3XJD/ref=sr_1_15?crid=3TE631WP55AJI&amp;dib=eyJ2IjoiMSJ9.IaSzCjtKAmtj9qvwufrhJzlvLNIEaYDxUcJTOVdYnuxBcunH_EOOSkGQZC2TxbFZVGALaBk-sjEkzWzBnuq_j2ZAjacCvsGd_zuOwyiSaiXTwq2qi3Bz9-9BsTnOBK3Y9sIZZcNqLYhdOoXx-RqVT19PPZVy1Oyc8zCoj22N9TORPJzQajzYandAK4dtOmWSgVGydvUWCrLzfUBRrQOkpTmfC6TTjvht7g_6AbIy6JuK6v0wxUCNBMlVw16f472VPGJse8xOkR4r1aU7LHU6_rFf52IfUZHZICFY3F9thD0.QmDvXGC_2LAIo77lCq1GSiSkZ8Nz0jP2Us6skW0-_dQ&amp;dib_tag=se&amp;keywords=beauty&amp;qid=1713996210&amp;sprefix=beaut%2Caps%2C645&amp;sr=8-15" rel="noopener noreferrer nofollow" target="_blank"><em>Beauty of Joseon</em></a><em> description</em></p><p>Input description:</p><pre><code class="language-no-highlight">    Long Lasting Hydration, All Day Long: With a unique blend of 2% niacinamide and 2% squalane, Dynasty Cream expertly maintains your skin's oil-moisture balance. Immerse your skin with Dynasty Cream. Specially formulated to address dry skin, this Korean moisturizer reigns supreme in hydrating your face.
+    Radiant Dewy Complexion: Dynasty Cream stands out with its luxuriously dense and firm texture, a hallmark of Beauty of Joseon's creams. This proprietary texture offers more than just moisture; it delivers a dewy, radiant finish to your skin.
+    All-in-One Solution: Dynasty Cream isn't just any moisturizer – it's your complete skincare solution. Packed with multiple benefits, it balances oil and moisture, protects from external elements, and enhances your skin's radiance. Experience the power of an all-in-one cream that simplifies your skincare routine while delivering remarkable results.
+    Double Repair Brilliance: Revel in the dual-action benefits of our Dynasty Cream. This facial moisturizer not only repairs and rejuvenates your facial skin, but also extends its nurturing touch to your delicate eye area.
+    Great Gift: Perfect for grand parents, moms, dads, girlfriends and boyfriends as a birthday gift and event for special occasions. Present your loved ones with this dynasty cream korean skincare.
+</code></pre><p>Sample output:</p><pre><code class="language-python">Top 3 Predicted Categories:
+
+All Beauty 82
+Beauty 18
+Clothing, Shoes &amp; Jewelry 0</code></pre><p><strong>Example 2:</strong><em> an example of the program output for the </em><a href="https://www.amazon.com/Soucolor-72-Color-Coloring-Crafting-72-Colors/dp/B01N09ZDEI/ref=sr_1_2_sspa?dib=eyJ2IjoiMSJ9.kZxONGEZLbN-FOojFESGRdiE4bbppHfLJ6IBFgfo_9kEYsf2M2WOsNXnskynm0wHneHZVUrqjafGaed_g9s918gBW-cd1OgNRyFtJRNGzUqiRPYgnZHtdqun4KPAjswMjT_N7QOWVvtenOHgCrLm5cmVItqb-uitggs74sTCXoACiYp8VI0HDYSx79UhCqnPGvilq1-S3jm58zqOXrOOPMYVhQNvLHRA_r4worKP2WPXDuI596MtGAPW03mbAINIwTBQSMuoQl3c3oE59HEW6ZWpq-Z8HQp-nWI08deG3wE.jZw5iEXsFMaFTAUhdo3A_2AGeYETC61rk05XywxNlVQ&amp;dib_tag=se&amp;keywords=art&amp;qid=1713996518&amp;sr=8-2-spons&amp;sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&amp;psc=1" rel="noopener noreferrer nofollow" target="_blank"><em>Coloured Pencils</em></a><em> description</em></p><p>Input description:</p><pre><code class="language-no-highlight">    WHAT YOU GET -- 72 colored pencils + 1 Soucolor pencil eco-friendly box. Convenient to storing and keep the color all visible, without any trouble finding the color you are looking for.
+    PREMIUM PENCILS-- 72-color art colored pencils have soft leads, easy to sharpen, they won't breaking, cracking or crumbling.
+    MULTIPLE COLOR -- 72 individual colors, rich colors provide smooth coloring, easy blending and shading, colorful illustrations Perfect for drawing, sketching, adult coloring book.
+    SAFE To USE -- Odorless Materials. With safety certificate EN71. Note: Choking Hazard: Small parts, not suitable for under 3 years of age.
+</code></pre><p>Sample output:</p><pre><code class="language-python">Top 3 Predicted Categories:
+
+Arts, Crafts &amp; Sewing 66
+Toys &amp; Games 8
+Baby Products 6</code></pre><p><strong>Example 3:</strong><em> an example of the program output for the </em><a href="https://www.amazon.com/Post-Sticky-Sticking-Collection-654-24SSMIA-CP/dp/B01D8F5FKS/ref=sr_1_3_sspa?crid=3IG2GLN19XZK0&amp;dib=eyJ2IjoiMSJ9.BngSemjWo8_nR83TYt3zCXlaa_8YXHTo4N-NQcd00u4zb-uf9p_6xpm8PsDJi1XZFBdu_g3bqumy-NftDl-8RlQNsfOEF9eeuKvFhqSsD02DK-lPY3ZypOFHmu8SemoOh7Kxb7-p400NuEI0-DGTbl9dY2T0B_BIJDtFQnLaZXRlOmJVjmW-J7CFhPeL_uSTPCC5qRhzGZ1OJhVY134e4bhcYSMXMBTQG6IncrM8BMpvxOFYFH09L2UVH3P2k0bswHo7ZW-dP6bSrH_i05hCrzJcvHt-1tjmEz4g5t7mWTc.G146z_EjOA-BVxgJ2LschIWlJDcyWVIgt9uIyVJxvf0&amp;dib_tag=se&amp;keywords=office+supplies&amp;qid=1713996424&amp;sprefix=office+supplie%2Caps%2C1234&amp;sr=8-3-spons&amp;sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&amp;psc=1" rel="noopener noreferrer nofollow" target="_blank"><em>Sticky Notes</em></a><em> description</em></p><p>Input description:</p><pre><code class="language-no-highlight">    EXPERIENCE THE POWER OF 2X STICKINESS: Post-it Super Sticky Notes offer twice the sticking power of basic sticky notes, ensuring they stay put and won't fall off
+    STICK AND RESTICK ANYWHERE: These notes adhere firmly to walls, windows, doors, and other vertical surfaces, allowing you to move your reminders with ease
+    VALUE-PACKED CONVENIENCE: Each pack includes 24 pads of 3 in. x 3 in. notes, with 70 sheets per pad, providing an ample supply for your office, work area, or classroom
+    VERSATILE AND ESSENTIAL: Post-it Super Sticky Notes are the perfect solution for shopping lists, reminders, to-do lists, color-coding, labeling, family chore reminders, brainstorming, storyboarding, and quick notes
+    VARIOUS SIZES AND SHAPES: Available in different sizes, with or without lines, to cater to your specific needs
+    EYE-CATCHING COLORS: Vibrant and colorful reminders are more likely to grab attention and be noticed
+    INTRODUCING THE SUPERNOVA NEON COLLECTION: Energize your ideas with the exciting colors of Acid Lime, Aqua Splash, Guava, Tropical Pink, and Iris Infusion
+
+    EXPLORE OUR COLLECTIONS: With 11 color collections, the Post-it Brand offers a wide range of options to suit every style and preference, whether at home, in school, or at the office
+    TRUST THE ORIGNAL CREATOR: Made in the USA with globally sourced materials, the one and only Post-it Note was invented over 40 years ago by the Post-it Brand
+    SUSTAINABILITY: Post-it Super Sticky Notes can be recycled</code></pre><p>Sample output:</p><pre><code class="language-python">Top 3 Predicted Categories:
+
+Office Products 18
+Toys &amp; Games 11
+Arts, Crafts &amp; Sewing 10</code></pre>
+</div>

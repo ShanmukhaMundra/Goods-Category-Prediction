@@ -1,0 +1,78 @@
+<div class="step-text">
+<p></p><h5 id="description">Description</h5><p>Imagine yourself browsing a massive retail marketplace with millions of products vying for your attention. You want a specific item but it feels like searching for a needle in a haystack. This struggle is common to shoppers and retailers. Shoppers waste time searching through things they don't need, while sellers struggle to make their products discoverable. </p><p>In this project, you'll tackle the challenge of product discoverability by building a system that automatically categorizes products based on their descriptions. You will use the <a href="https://www.kaggle.com/c/retail-products-classification" rel="noopener noreferrer nofollow" target="_blank">Retail Products Classification dataset</a>. This dataset contains thousands of retail product descriptions already categorized into 21 distinct categories. This data will serve as the foundation for training your machine learning model, enabling it to learn the key features that differentiate products across different categories.</p><p>In this stage, you will prepare the product descriptions for the machine learning model by applying several text pre-processing techniques. You will begin by cleaning up the data. This might involve removing missing values, like empty descriptions. Several rows contain extraneous texts. This will be removed for you alongside rows with empty values. However, there are also extraneous characters inside the text. You should clean this with:</p><pre><code class="language-python">text = (
+   text.lower().replace("]", "").replace("[", "")
+   .replace("\\n", "").replace("\\r\\n", "")
+   .replace("^", "").replace("_", "")
+   .replace("`", "").replace("\\", "").strip()
+)</code></pre><p>After cleaning the text, you can then tokenize and lemmatize with Part-of-Speech tags. You will need the following to perform these operations:</p><pre><code class="language-python">nltk.download("stopwords")
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')</code></pre><p>To ensure consistency in preprocessing, we provide boilerplate code with the required data structures. This serves as a guide for everyone, ensuring uniformity in the preprocessing approach:</p><pre><code class="language-python">def preprocess_data(df: pd.DataFrame) -&gt; pd.DataFrame:
+
+    def tokenize_text(text: str) -&gt; list[str]:
+
+        # Remove extraneous text
+        text = ...
+
+        # Tokenize with regexp token with the pattern [A-z]+
+        tokens = ...
+
+        # Remove stopwords
+        tokens = ...
+
+        return tokens
+
+    def lemmatize_text(tokens: list[str]) -&gt; list[str]:
+
+        # Instantiate WordNetLemmatizer
+        lemmatizer = ...
+
+        # Generate POS tag for each word
+        tokens = ...
+
+        # Lemmatize with generated POS tags
+        tokens = [lemmatizer.lemmatize(token, pos=f"{tag_map(tag)}") for token, tag in tokens]
+
+        return tokens
+
+    def tag_map(postag: str) -&gt; str:
+        if postag.startswith("J"):
+            return wordnet.ADJ
+        elif postag.startswith("V"):
+            return wordnet.VERB
+        elif postag.startswith(("R", "D", "P", "X")):
+            return wordnet.ADV
+        else:
+            return wordnet.NOUN
+
+    # Add a column called `tokens` to the DataFrame containing the preprocessed data
+    df["tokens"] = df["description"].apply(lambda x: lemmatize_text(tokenize_text(x)))
+
+    return df</code></pre><p>The POS tags generated from <code class="language-python">nltk.tag.pos_tag</code> cannot be used directly with the <code class="language-python">lemmatizer</code>. The <code class="language-python">tag_map</code> helper function is used to convert to the acceptable ones in <code class="language-python">wordnet</code>. If you do not pass the POS tags in the <code class="language-python">lemmatizer</code>, the default <code class="language-python">wordnet.NOUN</code> is used. </p><p>After completing the tasks in the <code class="language-python">preprocess_data</code> function, include the <code class="language-python">main</code> function and run the program:</p><pre><code class="language-python">def main():
+
+    # Load the data as a DataFrame
+    df = pd.read_csv("../data/descriptions.csv")
+
+    # Drop null values from DataFrame
+    df = df.dropna()
+
+    # Remove rows with extranoues values
+    df = df = df[~(df.description.str.match(r'^[\s]+$|^[#]+$|^[-]+$|^\.$|^[0-9\s\-\.]+$|^\b(?:\w+\s*){1,2}\b$|No\. 30247: 3\/8"-24M'))]
+
+    # Perform preprocessing
+    preprocessed_data = preprocess_data(df)
+
+    # Print the first four rows as shown in the example
+    print(*preprocessed_data.tokens.tolist()[:4], sep="\n")
+
+    # Save the preprocessed data as a pickle file to be used in later stages
+    with open("../data/preprocessed_df.pkl", "wb") as f:
+        pickle.dump(preprocessed_data, f, pickle.HIGHEST_PROTOCOL)
+
+
+if __name__ == "__main__":
+    main()</code></pre><h5 id="objectives">Objectives</h5><p>To complete this stage:</p><ol><li><p>Download the <a href="https://cogniterra.org/media/attachments/lesson/38348/descriptions.csv" rel="noopener noreferrer nofollow" target="_blank">description.csv</a> file and save it in the <code class="language-python">data</code> directory</p></li><li><p>Remove extraneous rows and texts</p></li><li><p>Complete the inner functions: <code class="language-python">tokenize_text</code> and <code class="language-python">lemmatize_text</code> </p></li><li><p>Run the <code class="language-python">main</code> function to:</p><ul><li><p>Load <code class="language-python">description.csv</code> as a pandas DataFrame and drop null values</p></li><li><p>Remove extraneous rows from the DataFrame</p></li><li><p>Perform the preprocessing operation</p></li><li><p>Print the preprocessed  data as shown in Example 1</p></li><li><p>Save the preprocessed data as a <code class="language-python">preprocessed_df.pkl</code> file in the data directory</p></li></ul></li></ol><div class="alert alert-primary"><p>Older versions of Python may cause compatibility issues. Please use Python 3.11.9 or higher as your interpreter.</p></div><div class="alert alert-warning"><p>Before pressing the <code class="language-python">Check</code> button, please run your solution</p></div><p></p><h5 id="examples">Examples</h5><p><strong>Example 1:</strong><em> an example of the program output</em></p><pre><code class="language-python">['solder', 'pick', 'pick', 'molten', 'solder', 'make', 'jewelry']
+['screen', 'need', 'protect', 'screen', 'expensive', 'little', 'gadgetry', 'pack', 'clear', 'screen', 'protector', 'generous', 'x', 'x', 'thick', 'protect', 'scratch', 'reduce', 'glare', 'make', 'sony', 'cli', 'easy', 'cut', 'fit', 'anything', 'screen', 'want', 'protect', 'make', 'usa', 'fellowes']
+['bring', 'precision', 'glance', 'casio', 'men', 'databank', 'digital', 'watch', 'dbc', 'feature', 'blue', 'tone', 'digital', 'dial', 'face', 'durable', 'mineral', 'dial', 'window', 'auto', 'calendar', 'display', 'date', 'month', 'detail', 'keep', 'control', 'include', 'page', 'databank', 'digit', 'calculator', 'daily', 'alarm', 'stopwatch', 'function', 'ensure', 'easy', 'wear', 'light', 'gray', 'resin', 'band', 'accompany', 'sturdy', 'buckle', 'clasp', 'millimeter', 'case', 'stationary', 'light', 'gray', 'bezel', 'make', 'high', 'quality', 'resin', 'present', 'unsurpassed', 'functionality', 'innovative', 'timepiece', 'design', 'accommodate', 'go', 'lifestyle']
+['factory', 'recondition', 'dewalt', 'dw', 'kr', 'heavy', 'duty', 'amp', 'screwdriver', 'kit']
+</code></pre>
+</div>

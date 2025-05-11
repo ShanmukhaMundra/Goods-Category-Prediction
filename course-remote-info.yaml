@@ -1,0 +1,268 @@
+hyperskill_project:
+  id: 463
+  ide_files: https://hyperskill.org/api/projects/463/additional-files/additional_files.json
+  is_template_based: false
+  use_ide: true
+update_date: "Sun, 11 May 2025 14:28:19 UTC"
+stages:
+  - id: 2667
+    step: 47083
+    is_completed: true
+  - id: 2668
+    step: 47084
+    is_completed: false
+  - id: 2669
+    step: 47085
+    is_completed: false
+  - id: 2670
+    step: 47086
+    is_completed: false
+topics:
+  0:
+    - title: What is math?
+      theory_id: 28537
+    - title: Applications of math
+      theory_id: 28832
+    - title: "Math notations, formulas, and statements"
+      theory_id: 28757
+    - title: Basic concepts
+      theory_id: 26143
+    - title: Cartesian coordinates
+      theory_id: 13114
+    - title: Basics of sets
+      theory_id: 8220
+    - title: Basics of functions
+      theory_id: 8857
+    - title: Properties of functions
+      theory_id: 20683
+    - title: The concept of probability
+      theory_id: 38243
+    - title: Probability and Statistics
+      theory_id: 11637
+    - title: What is linear algebra?
+      theory_id: 35882
+    - title: Numerical and categorical data
+      theory_id: 24686
+    - title: Population and sample
+      theory_id: 11274
+    - title: "Mean, median, and mode"
+      theory_id: 11282
+    - title: Operating systems
+      theory_id: 9704
+    - title: Command line overview
+      theory_id: 8977
+    - title: Parameters and options
+      theory_id: 9746
+    - title: Properties of numerical functions
+      theory_id: 20704
+    - title: "Vectors, matrices, scalars"
+      theory_id: 16969
+    - title: Introduction to matrices
+      theory_id: 7112
+    - title: Intro to NumPy
+      theory_id: 9672
+    - title: Working with file modes and permissions
+      theory_id: 13961
+    - title: WordNet
+      theory_id: 22405
+    - title: POS tagging
+      theory_id: 22449
+    - title: Introduction to Python
+      theory_id: 5204
+    - title: Multi-line programs
+      theory_id: 5233
+    - title: Taking user's input
+      theory_id: 5913
+    - title: Program with numbers
+      theory_id: 5872
+    - title: If statement
+      theory_id: 5953
+    - title: Else statement
+      theory_id: 5932
+    - title: For loop
+      theory_id: 6065
+    - title: Importing modules
+      theory_id: 6019
+    - title: Creating modules
+      theory_id: 6057
+    - title: Multiple modules. Package
+      theory_id: 6384
+    - title: Installing packages with pip
+      theory_id: 6230
+    - title: The Jupyter Notebook
+      theory_id: 12623
+    - title: Google Colab
+      theory_id: 12631
+    - title: Class
+      theory_id: 6661
+    - title: Class instances
+      theory_id: 6669
+    - title: Methods
+      theory_id: 6931
+    - title: Methods and attributes
+      theory_id: 6981
+    - title: While loop
+      theory_id: 5940
+    - title: "Loop control: break, continue, pass"
+      theory_id: 6302
+    - title: Files
+      theory_id: 13025
+    - title: Regexps in Python
+      theory_id: 9468
+    - title: Escaping in regexps
+      theory_id: 9754
+    - title: Regexp sets and ranges
+      theory_id: 10035
+    - title: Shorthands
+      theory_id: 10142
+    - title: Regexp quantifiers
+      theory_id: 10355
+    - title: File types
+      theory_id: 13017
+    - title: Introduction to pandas
+      theory_id: 10416
+    - title: Reading data in pandas
+      theory_id: 31809
+    - title: File modes and permissions
+      theory_id: 13953
+    - title: Files in Python
+      theory_id: 8691
+    - title: Reading files
+      theory_id: 8139
+    - title: Natural language processing
+      theory_id: 9157
+    - title: Introduction to NLTK
+      theory_id: 31188
+    - title: Text corpora in NLTK
+      theory_id: 10503
+    - title: Writing files
+      theory_id: 8334
+    - title: Context manager
+      theory_id: 8702
+    - title: Pickle
+      theory_id: 12651
+    - title: Tokenization
+      theory_id: 51949
+    - title: Tokenization implementation
+      theory_id: 10363
+    - title: Lemmatization
+      theory_id: 31378
+    - title: Overview of text normalization
+      theory_id: 22453
+    - title: Series
+      theory_id: 10421
+    - title: DataFrame
+      theory_id: 10933
+    - title: Accessing data in a DataFrame
+      theory_id: 12998
+    - title: .loc & .iloc
+      theory_id: 13343
+    - title: Summarizing numeric columns
+      theory_id: 13359
+    - title: Grouping and aggregating data in pandas
+      theory_id: 12585
+    - title: Working with missing values
+      theory_id: 14686
+    - title: DataFrame.apply()
+      theory_id: 29049
+    - title: Handling missing values
+      theory_id: 17154
+    - title: Modifying a DataFrame
+      theory_id: 13007
+    - title: Basic data types
+      theory_id: 5852
+    - title: Variables
+      theory_id: 5859
+    - title: "Integer arithmetic: basic operations"
+      theory_id: 5865
+    - title: Invoking functions
+      theory_id: 5891
+    - title: Boolean type and operations. True and false
+      theory_id: 6025
+    - title: Comparisons
+      theory_id: 5920
+    - title: List
+      theory_id: 5979
+    - title: Indexes
+      theory_id: 6189
+    - title: Declaring functions
+      theory_id: 5900
+    - title: Global vs local. Scopes
+      theory_id: 6322
+    - title: Identity testing
+      theory_id: 8077
+    - title: "Function, arguments and parameters"
+      theory_id: 7248
+    - title: Tuple
+      theory_id: 7462
+    - title: Quotes and multi-line strings
+      theory_id: 5814
+    - title: String formatting
+      theory_id: 6037
+    - title: "Working with strings: basic methods"
+      theory_id: 6842
+    - title: Escape sequences
+      theory_id: 7130
+    - title: Splitting strings and joining lists
+      theory_id: 6972
+    - title: Dictionary
+      theory_id: 6481
+    - title: Slicing
+      theory_id: 6177
+    - title: Type casting
+      theory_id: 6224
+    - title: Regular expression
+      theory_id: 7580
+    - title: Sep and end arguments of print
+      theory_id: 7452
+    - title: Lambda functions
+      theory_id: 7092
+  1:
+    - title: Computer algorithms
+      theory_id: 16547
+    - title: Array creation and indexing
+      theory_id: 10077
+    - title: Operations with an array
+      theory_id: 10170
+    - title: Intro to Machine Learning
+      theory_id: 10403
+    - title: Typical ML pipeline
+      theory_id: 10411
+    - title: PyCharm basics
+      theory_id: 6193
+    - title: Word2Vec
+      theory_id: 11328
+    - title: Introduction to scikit-learn
+      theory_id: 10430
+    - title: Train and test sets
+      theory_id: 17181
+    - title: List comprehension
+      theory_id: 6315
+  2:
+    - title: Introduction to regression
+      theory_id: 11417
+    - title: Introduction to classification
+      theory_id: 10942
+    - title: Ensemble methods
+      theory_id: 15391
+    - title: Random forest
+      theory_id: 16554
+    - title: Preprocessing categorical features
+      theory_id: 30029
+    - title: Text Classification
+      theory_id: 32475
+    - title: Training a model with scikit-learn
+      theory_id: 14678
+    - title: Decision Trees
+      theory_id: 11426
+    - title: Accuracy and confusion matrix
+      theory_id: 11245
+    - title: Preprocessing categorical features with pandas
+      theory_id: 32241
+    - title: Decision tree with scikit-learn
+      theory_id: 16405
+    - title: Random forest in scikit-learn
+      theory_id: 16563
+  3:
+    - title: Overview of Streamlit
+      theory_id: 48822

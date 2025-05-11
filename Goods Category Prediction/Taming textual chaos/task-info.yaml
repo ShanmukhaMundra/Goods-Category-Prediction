@@ -1,0 +1,26 @@
+type: edu
+files:
+  - name: test/__init__.py
+    visible: false
+    learner_created: false
+  - name: test/tests.py
+    visible: false
+    learner_created: false
+  - name: goods.py
+    visible: true
+    learner_created: false
+  - name: tests.py
+    visible: false
+    learner_created: false
+  - name: data/descriptions.csv
+    visible: true
+    learner_created: true
+  - name: data/preprocessed_df.pkl
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/47083#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sat, 10 May 2025 16:03:13 UTC"
+record: 2

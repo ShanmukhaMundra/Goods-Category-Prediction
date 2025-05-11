@@ -1,0 +1,18 @@
+type: hyperskill
+title: Goods Category Prediction
+language: English
+summary: "<p>Retail platforms are flooded with millions of products, making accurate\
+  \ product categorization crucial for both retailers listing their products and customers\
+  \ searching for products to purchase. This project equips you with the skills to\
+  \ build a system that does just that! You will use Natural Language Processing (NLP)\
+  \ techniques to understand product descriptions and discover how word embeddings\
+  \ capture the contextual meanings of words in these descriptions. By the end of\
+  \ the project, you will not only have a solid grasp of NLP but also have the satisfaction\
+  \ of showcasing your work in a user-friendly web app!</p><br/><br/>Learn more at\
+  \ <a href=\"https://hyperskill.org/projects/463?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card\"\
+  >https://hyperskill.org/projects/463</a>"
+programming_language: Python
+content:
+  - Goods Category Prediction
+mode: Study
+yaml_version: 2

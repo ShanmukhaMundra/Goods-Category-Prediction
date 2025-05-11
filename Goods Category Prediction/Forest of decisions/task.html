@@ -1,0 +1,55 @@
+<div class="step-text">
+<h5 id="description">Description</h5><p>Now that you have transformed your product descriptions into a machine-readable format, it's time to build the model that will categorize them! </p><p>In this stage, you'll leverage the power of ensemble learning by training a Random Forest classifier. Random Forest is a well-suited choice for our task because it excels in handling high-dimensional data like word embeddings (up to 300 dimensions in our case) and inherently accommodates negative values, which are common in word embeddings.</p><pre><code class="language-python">def train_rf(train_df, train_labels):
+
+    # Instantiate a RandomForestClassifier
+    rf_model = ...
+
+    # Fit the model
+    ...
+
+    return rf_model</code></pre><p>While dimensionality reduction techniques and data transformations can be tempting tools to tame high-dimensional data with negative values, they're not a magic bullet. Dimensionality reduction leads to data loss while scaling can introduce complexities to the training process, especially if not applied correctly. Random Forest can handle the data without these potential drawbacks. </p><p>Complete the tasks in the <code class="language-python">train_rf</code> and <code class="language-python">main</code> functions and then run the program:</p><pre><code class="language-python">def main():
+
+    # Load train_df.pkl from the data directory
+    ...
+
+    # Load test_df.pkl from the data directory
+    ...
+
+    # Load train_labels.pkl from the data directory
+    ...
+
+    # Load test_labels.pkl from the data directory
+    ...
+
+    # Instantiate LabelEncoder
+    label_encoder = ...
+
+    # Fit and transform the labels
+    train_labels = ...
+    test_labels = ...
+
+    # Call the train_rf function
+    rf_model = ...
+
+    # Predict with the rf_mdoel
+    predict_train = ...
+    predict_test = ...
+
+    # Print train accuracy
+    print(accuracy_score(train_labels, predict_train))
+
+    # Print test accuracy
+    print(accuracy_score(test_labels, predict_test))
+
+    # Save the rf_model and label_encoder as pickle files in the data directory
+    with open('../data/rf_model.pkl', 'wb') as f:
+        pickle.dump(rf_model, f, pickle.HIGHEST_PROTOCOL)
+
+    with open("../data/label_encoder.pkl", "wb") as f:
+        pickle.dump(label_encoder, f, pickle.HIGHEST_PROTOCOL)
+
+
+if __name__ == "__main__":
+    main()</code></pre><h5 id="objectives">Objectives</h5><p>To complete this stage:</p><ol><li><p>Finish the tasks in the <code class="language-python">train_rf</code> and <code class="language-python">main</code> functions</p></li><li><p>Print the train and test accuraries</p></li><li><p>Run the program to save the pickle files to the data directories</p></li></ol><p></p><div class="alert alert-warning"><p>Before pressing the <code class="language-python">Check</code> button, please run your solution</p></div><p></p><h5 id="examples">Examples</h5><p><strong>Example 1:</strong><em> an example of the program output</em></p><pre><code class="language-python">0.997
+0.719</code></pre>
+</div>
