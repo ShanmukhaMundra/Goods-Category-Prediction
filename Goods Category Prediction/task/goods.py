@@ -228,7 +228,7 @@ def main():
                 st.write("Top 3 Predicted Categories:")
                 for i, classes in enumerate(top3_classes):
                     for category, prob in zip(classes[::-1], predicted_proba[i, top3_idx[i]][::-1]):
-                        st.write(f"{category} {prob * 100:.0f}%")
+                        st.write(f"{category} : {prob * 100:.0f}")
 
     with clear:
         clear_button = st.button('Clear')
